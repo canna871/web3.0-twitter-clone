@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import React from 'react'
 import Image from 'next/image';
 import IconImage from '../public/emoji_nature_white_24dp.svg';
 import PersonImage from '../public/person_white_24dp.svg';
@@ -6,14 +6,16 @@ import SettingsImage from '../public/settings_white_24dp.svg';
 import LogOutImage from '../public/logout_white_24dp.svg';
 import Post from '../components/Post';
 
-const Index: NextPage = () => {
+const Profile = () => {
 	return (
 		<div>
-			<h1 className='text-2xl font-bold p-3 mb-1'>Home</h1>
-			<div className='mb-5 p-3'>
+			<h1 className='text-2xl font-bold p-3 mb-1'>Profile</h1>
+			<div className='mb-5 p-3 flex'>
 				<Image src={PersonImage} width={60} height={60} className='bg-gray-800 rounded-full' />
-				<textarea placeholder="What's happening?" className='w-full m-1 p-1 bg-transparent border-b-2 outline-none' />
-				<button className='bg-blue-600 text-white pl-4 pr-4 pt-2 pb-2 rounded-full font-semibold hover:bg-blue-700'>Tweet</button>
+				<div className='ml-3'>
+					<h1 className='text-2xl font-medium'>Username</h1>
+					<p className='font-light'>XXX Tweets, XXX Followers</p>
+				</div>
 			</div>
 			<div className='flex flex-col'>
 				<Post />
@@ -27,4 +29,4 @@ const Index: NextPage = () => {
 	)
 }
 
-export default Index
+export default Profile
