@@ -7,24 +7,17 @@ import IconImage from '../public/emoji_nature_white_24dp.svg';
 import Like from '../public/thumb_up_white_24dp.svg';
 import Dislike from '../public/thumb_down_white_24dp.svg';
 
-const Post = () => {
+const Post = ({message, like, dislike}: any) => {
 	return (
 		<div className='border-t p-3 max-h-80 overflow-y-scroll'>
 			<Image src={PersonImage} width={55} height={55} className='bg-gray-800 rounded-full' />
 			<div>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa assumenda excepturi tempore odio repellendus error recusandae et tempora. Recusandae molestias quod vero debitis beatae, earum autem explicabo facere nam excepturi.
-				</p>
-				<div>
+				<pre>{message}</pre>
+				<div className='flex'>
 					<Image src={Like} width={30} height={25} className='hover:bg-gray-600 transition-all rounded-full hover:cursor-pointer' />
+					<p>{like}</p>
 					<Image src={Dislike} width={30} height={25} className='hover:bg-gray-600 transition-all rounded-full hover:cursor-pointer'/>
+					<p>{dislike}</p>
 				</div>
 			</div>
 		</div>
