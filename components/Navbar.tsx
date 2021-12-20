@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import IconImage from '../public/emoji_nature_white_24dp.svg';
 import PersonImage from '../public/person_white_24dp.svg';
 import SettingsImage from '../public/settings_white_24dp.svg';
@@ -8,7 +8,14 @@ import { MoralisProvider, useMoralis } from 'react-moralis';
 import Link from 'next/link';
 
 const Navbar = () => {
-	const { logout } = useMoralis();
+	/// VARIABLE DECLARATIONS ///
+	const { logout, user } = useMoralis();
+	const [userAddress, setUserAddress] = useState('');
+
+	/// USE EFFECT ///
+	useEffect(() => {
+		if (user) setUserAddress(user.get("ethAddress"));
+	});
 
 	return (
 		<nav className='w-3/12 flex flex-col border-r p-10 min-h-screen'>
@@ -23,7 +30,7 @@ const Navbar = () => {
 					Settings
 				</h1>
 			</Link>
-			<Link href='zeno'>
+			<Link href={userAddress}>
 				<h1 className='text-white flex items-center text-2xl font-medium hover:bg-gray-600 transition-all rounded-full hover:cursor-pointer p-2'>
 					<Image src={PersonImage} height={50} width={50} />
 					Profile

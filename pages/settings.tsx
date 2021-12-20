@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import IconImage from '../public/emoji_nature_white_24dp.svg';
 import PersonImage from '../public/person_white_24dp.svg';
@@ -8,8 +8,24 @@ import { useMoralis } from 'react-moralis';
 import Login from '../components/Login';
 
 const Settings = () => {
+	/// VARIABLE DECLARATIONS ///
 	const { isAuthenticated, user } = useMoralis();
+	const [username, setUsername] = useState('');
+	const [changedUsername, setChangedUsername] = useState(false);
 
+	/// FUNCTION DECLARATIONS ///
+	const save = () => { 
+		if (user) {
+			user.set("username", username);
+			user.save();
+			alert('Saved!');
+		}
+	};
+
+	const changeUsername = (e: any) => {
+		setUsername(e.target.value);
+		setChangedUsername(true);
+	}
 
 	return (
 		<div>
@@ -21,13 +37,9 @@ const Settings = () => {
 					<Image src={PersonImage} width={60} height={60} className='bg-gray-800 rounded-full' />
 					<div className='flex items-center'>
 						<h1>username: </h1>
-						<input type='text' value={user?.get("username")} className='w-full m-1 p-1 bg-transparent border-b-2 outline-none' />
+						<input type='text' value={changedUsername ? username : user?.get('username')} className='w-full m-1 p-1 bg-transparent border-b-2 outline-none' onChange={changeUsername} />
 					</div>
-					<div className='flex items-center'>
-						<h1>password: </h1>
-						<input type='password' value={user?.get("password")} className='w-full m-1 p-1 bg-transparent border-b-2 outline-none' />
-					</div>
-					<button className='bg-blue-600 text-white pl-4 pr-4 pt-2 pb-2 rounded-full font-semibold hover:bg-blue-700'>Save</button>
+					<button className='bg-blue-600 text-white pl-4 pr-4 pt-2 pb-2 rounded-full font-semibold hover:bg-blue-700' onClick={save}>Save</button>
 				</div>
 			</div> : <Login />}
 		</div>

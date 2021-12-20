@@ -14,6 +14,7 @@ const Index: NextPage = () => {
 	const { isAuthenticated, user } = useMoralis();
 	const [message, setMessage] = useState('');
 	const [totalMessagesSentByUser, setTotalMessagesSentByUser] = useState(0);
+	const [tweets, setTweets]: any = useState([]);
 
 	/// USE EFFECT ///
 	useEffect(() => {
@@ -26,8 +27,15 @@ const Index: NextPage = () => {
 			else {
 				user.set('totalMessagesSent', 0);
 			}
+
+			// get all the posts from the user's followers
+			let newTweets: any = user.get('tweets');
+			user.get('followers')?.forEach((follower: any) => {
+				newTweets = [...newTweets, ...follower.get('tweets')];
+			});
+			setTweets(newTweets);
 		}
-	}, [])
+	})
 
 	/// FUNCTION DECLARATION ///
 	const tweet = () => {
@@ -61,7 +69,9 @@ const Index: NextPage = () => {
 					<button className='bg-blue-600 text-white pl-4 pr-4 pt-2 pb-2 rounded-full font-semibold hover:bg-blue-700' onClick={tweet}>Tweet</button>
 				</div>
 				<div className='flex flex-col'>
-					<Post message={message} like={13} dislike={10}/>
+					{tweets.map((tweet: any, index: number) => (
+						<Post key={index} message={tweet.message} like={tweet.like} dislike={tweet.dislike} />
+					))}
 				</div>
 			</div> : <Login />}
 		</div>

@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
-		<MoralisProvider serverUrl={process.env.NEXT_PUBLIC_URL!} appId={process.env.NEXT_PUBLIC_ID!}>
+		<MoralisProvider serverUrl="https://psihq2d5rwsh.usemoralis.com:2053/server" appId="EZJ5Lvfb1jeEmQlRgZm7EMxBGjVYERom2Wj7effv">
 			<div className='flex w-screen justify-between bg-black'>
 				<Navbar />
 				<div className='w-6/12 border-r text-white'>
