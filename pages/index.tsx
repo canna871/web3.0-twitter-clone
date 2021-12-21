@@ -1,9 +1,6 @@
 import type { NextPage } from 'next'
 import Image from 'next/image';
-import IconImage from '../public/emoji_nature_white_24dp.svg';
 import PersonImage from '../public/person_white_24dp.svg';
-import SettingsImage from '../public/settings_white_24dp.svg';
-import LogOutImage from '../public/logout_white_24dp.svg';
 import Post from '../components/Post';
 import { useMoralis } from 'react-moralis';
 import Login from '../components/Login';
@@ -11,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 const Index: NextPage = () => {
 	/// VARIABLE DECLARATION ///
-	const { isAuthenticated, user } = useMoralis();
+	const { isAuthenticated, user, Moralis } = useMoralis();
 	const [message, setMessage] = useState('');
 	const [totalMessagesSentByUser, setTotalMessagesSentByUser] = useState(0);
 	const [tweets, setTweets]: any = useState([]);
@@ -26,35 +23,45 @@ const Index: NextPage = () => {
 			// else, set the total messages sent by the user to 0
 			else {
 				user.set('totalMessagesSent', 0);
+				user.save();
 			}
 
 			// get all the posts from the user's followers
 			let newTweets: any = user.get('tweets');
-			user.get('followers')?.forEach((follower: any) => {
+			user.get('following')?.forEach((follower: any) => {
 				newTweets = [...newTweets, ...follower.get('tweets')];
 			});
 			setTweets(newTweets);
 		}
-	})
+	}, [user, message]);
 
 	/// FUNCTION DECLARATION ///
 	const tweet = () => {
 		let tweets = user?.get('tweets') || [];
-		tweets.push({
-			like: 0,
-			dislike: 0,
-			message: message,
-			id: totalMessagesSentByUser, // the total messages sent by the user is used as an id for the message since it is unique and will not be changed if the user deletes a message
-		});
+		
+		// create a new tweet object
+		const TweetObject = Moralis.Object.extend('Tweet');
+		const newTweet = new TweetObject();
+		newTweet.set('message', message);
+		newTweet.set('like', 0);
+		newTweet.set('dislike', 0);
+		newTweet.set('author', user?.get('ethAddress'));
+		newTweet.set('id', totalMessagesSentByUser) // the total messages sent by the user is used as an id for the message since it is unique and will not be changed if the user deletes a message
+		
+		// add the new tweet to the user's tweets
+		newTweet.save();
+		tweets.push(newTweet);
+
 		// update the user's tweets in the database
 		user?.set('tweets', tweets);
-		// update the total messages sent by the user in the database
+
+		// update the total messages sent by the user
 		user?.set('totalMessagesSent', totalMessagesSentByUser + 1);
-		// update the total number of messages sent by the user in the state
+		user?.save();
 		setTotalMessagesSentByUser(totalMessagesSentByUser + 1);
+
 		// reset the value of the textarea
 		setMessage('');
-		user?.save();
 	}
 
 	return (
@@ -69,8 +76,8 @@ const Index: NextPage = () => {
 					<button className='bg-blue-600 text-white pl-4 pr-4 pt-2 pb-2 rounded-full font-semibold hover:bg-blue-700' onClick={tweet}>Tweet</button>
 				</div>
 				<div className='flex flex-col'>
-					{tweets.map((tweet: any, index: number) => (
-						<Post key={index} message={tweet.message} like={tweet.like} dislike={tweet.dislike} />
+					{tweets?.map((tweet: any, index: number) => (
+						<Post key={index} tweet={tweet} />
 					))}
 				</div>
 			</div> : <Login />}

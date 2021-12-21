@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image';
-import IconImage from '../public/emoji_nature_white_24dp.svg';
 import PersonImage from '../public/person_white_24dp.svg';
-import SettingsImage from '../public/settings_white_24dp.svg';
-import LogOutImage from '../public/logout_white_24dp.svg';
 import { useMoralis } from 'react-moralis';
 import Login from '../components/Login';
 
