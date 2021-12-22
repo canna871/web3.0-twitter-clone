@@ -13,7 +13,6 @@ const Profile = () => {
 	const [profileIsUser, setProfileIsUser] = useState(false);
 	const [userName, setUserName] = useState('user not found');
 	const [userTweetsCount, setUserTweetsCount] = useState(0);
-	const [userFollowersCount, setUserFollowersCount] = useState(0);
 	const [isFollowingUser, setIsFollowingUser] = useState(false);
 	const { user, isAuthenticated } = useMoralis();
 	const { data }: any = useMoralisCloudFunction('getUsers');
@@ -26,7 +25,6 @@ const Profile = () => {
 				setUserName(u.get('username'));
 				setTweets(u.get('tweets'));
 				setUserTweetsCount(u.get('tweets').length || 0);
-				setUserFollowersCount(u.get('totalFollowers') || 0);
 			}
 		})
 
@@ -87,7 +85,7 @@ const Profile = () => {
 				<Image src={PersonImage} width={60} height={60} className='bg-gray-800 rounded-full' />
 				<div className='ml-3'>
 					<h1 className='text-2xl font-medium'>{userName}</h1>
-					<p className='font-light'>{userTweetsCount} Tweets, {userFollowersCount} Followers</p>
+					<p className='font-light'>{userTweetsCount} Tweets</p>
 					{!profileIsUser && isAuthenticated ? <button className='bg-blue-600 text-white mb-1 mr-2 p-2 rounded-full font-semibold hover:bg-blue-700 disabled:bg-opacity-30' onClick={followOrUnfollowUser}>{isFollowingUser ? "Unfollow" : "Follow"}</button> : null}
 				</div>
 			</div>
