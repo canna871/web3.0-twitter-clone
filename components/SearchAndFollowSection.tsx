@@ -10,7 +10,7 @@ const SearchAndFollowSection = () => {
 	/// USE EFFECT ///
 	useEffect(() => {
 		let newData: Array<any> = JSON.parse(JSON.stringify(data));
-		newData?.sort((a: any, b: any) => b.tweets.length - a.tweets.length);
+		newData?.sort((a: any, b: any) => b.tweets?.length - a.tweets?.length);
 		setPeopleToFollow(newData?.slice(0, 10));
 	}, [data])
 
@@ -23,7 +23,7 @@ const SearchAndFollowSection = () => {
 				<Link href={person.ethAddress} key={person.ethAddress}>
 					<div className='mt-3 hover:bg-gray-600 hover:cursor-pointer p-3'>
 						<h3 className='text-lg font-medium'>{person.username}</h3>
-						<p className='font-light text-gray-400'>{person.tweets.length} tweets</p>
+						<p className='font-light text-gray-400'>{person.tweets?.length} tweets</p>
 					</div>
 				</Link>
 				)}

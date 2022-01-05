@@ -23,8 +23,8 @@ const Profile = () => {
 		data?.forEach((u: any) => {
 			if (u.get('ethAddress') === id) {
 				setUserName(u.get('username'));
-				setTweets(u.get('tweets'));
-				setUserTweetsCount(u.get('tweets').length || 0);
+				setTweets(u.get('tweets')!);
+				setUserTweetsCount(u.get('tweets')?.length || 0);
 			}
 		})
 

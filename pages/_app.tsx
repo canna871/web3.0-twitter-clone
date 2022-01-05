@@ -7,6 +7,7 @@ import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
+		// process.env.NEXT_PUBLIC_URL! process.env.NEXT_PUBLIC_ID!
 		<MoralisProvider serverUrl={process.env.NEXT_PUBLIC_URL!} appId={process.env.NEXT_PUBLIC_ID!}>
 			<Head>
 				<title>Web 3.0 Twitter Clone</title>
