@@ -30,14 +30,22 @@ This application contains the following features:
 ---
 1. download the repository
 2. create a new server in [moralis.io](https://moralis.io/)
-3. create a .env file, and paste in the following code:
+3. in the server, add the following code to the cloud function
+```
+Moralis.Cloud.define("getUsers", async function (request) {
+  const query = new Parse.Query("User");
+  const result = await query.find({ useMasterKey: true });
+  return result;
+});
+```
+4. create a .env file, and paste in the following code:
 ```
 NEXT_PUBLIC_URL=the url of your moralis server
 NEXT_PUBLIC_ID=the id of your moralis server
 ```
-4. run:
+5. run:
 ```
 npm install
 npm run dev
 ```
-5. go to http://localhost:3000 and enjoy!
+6. go to http://localhost:3000 and enjoy!
